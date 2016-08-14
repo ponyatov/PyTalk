@@ -16,8 +16,11 @@ menu.Append(menuFile,'&File')
 
 def OnQuit(e):
 	frmMain.Close()
-menuQuit = menuFile.Append(wx.ID_EXIT,'&Quit')
+menuQuit = menuFile.Append(wx.ID_EXIT,'&Quit\tEsc')
 frmMain.Bind(wx.EVT_MENU,OnQuit,menuQuit)
+
+status = wx.StatusBar(frmMain)
+#frmMain.SetStatusBar(status)
 
 menuHelp = wx.Menu()
 menu.Append(menuHelp,'&Help')
@@ -33,6 +36,11 @@ def OnAbout(e):
 #	info.Developers = meta.Author
 	wx.AboutBox(info)
 frmMain.Bind(wx.EVT_MENU,OnAbout,menuAbout)
+
+scrW,scrH = frmMain.GetSize()
+treeDir = wx.TreeCtrl(frmMain,size=(scrW/4,scrH/8*7))
+root = treeDir.AddRoot(os.getcwd())
+treeDir.SetItemHasChildren(root)
 
 app.MainLoop()
 
